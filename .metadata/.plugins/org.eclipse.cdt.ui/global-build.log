@@ -1,0 +1,21 @@
+02:23:53 **** Incremental Build of configuration Debug for project inline_Assembly ****
+make -j7 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/main.o"
+arm-none-eabi-gcc -o "inline_Assembly.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/chimaochiagha/STM32CubeIDE/MyWorkspace/Target/inline_Assembly/STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="inline_Assembly.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: inline_Assembly.elf
+ 
+arm-none-eabi-size   inline_Assembly.elf 
+arm-none-eabi-objdump -h -S  inline_Assembly.elf  > "inline_Assembly.list"
+   text	   data	    bss	    dec	    hex	filename
+  23640	    476	   1588	  25704	   6468	inline_Assembly.elf
+Finished building: default.size.stdout
+ 
+Finished building: inline_Assembly.list
+ 
+02:23:56 **** Incremental Build of configuration Debug for project inline_Assembly ****
+make -j7 all 
+arm-none-eabi-size   inline_Assembly.elf 
+   text	   data	    bss	    dec	    hex	filename
+  23640	    476	   1588	  25704	   6468	inline_Assembly.elf
+Finished building: default.size.stdout
+ 

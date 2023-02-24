@@ -1,0 +1,10 @@
+19:09:48 **** Incremental Build of configuration Debug for project Register_and_Structs ****
+make -j7 all 
+arm-none-eabi-size   Register_and_Structs.elf 
+   text	   data	    bss	    dec	    hex	filename
+  23924	    476	   1588	  25988	   6584	Register_and_Structs.elf
+Finished building: default.size.stdout
+ 
+
+19:09:48 Build Finished. 0 errors, 0 warnings. (took 352ms)
+

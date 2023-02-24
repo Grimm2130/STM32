@@ -1,0 +1,60 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2708
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fswiss\fcharset0 Arial-BoldMT;\f2\fswiss\fcharset0 Helvetica-Bold;
+\f3\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww17700\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs36 \cf0 Steps for turning LED4 on
+\f1\b \cf2 \expnd0\expndtw0\kerning0
+ STM32f407vgt6
+\f0\b0 \cf0 \kerning1\expnd0\expndtw0 \
+\
+led4 @ PD12\
+\
+# enable the port GPIOD ports via the RCC register\
+# all GPIO ports are connected to the AHB1 bus, so enable the GPOID at the AHB1 offset in the RCC reg.\
+\ul  
+\f2\b locations:\ulnone \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 base addr : \ul \ulc0 0x40023800\ulnone \
+GPOID offset:  \ul 0x30\
+\ulnone GPIOA offset:  \ul \ulc0 0x40020000
+\f0\b0 \ulnone \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\b \cf0 \ul \ulc0 \
+## Turn the LED on
+\f0\b0 \ulnone \
+# calibrate the GPIOD\'92s port 12 as an output port\
+
+\f2\b - base Addr: \ul 0x40020C00
+\f0\b0 \ulnone \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 Set the port mode\
+-  
+\f2\b offfset : \ul 0x00
+\f0\b0 \ulnone \
+Set the output type\
+- 
+\f2\b offset: \ul 0x04\
+
+\f0\b0 \ulnone Set the output data\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f1\b \cf2 \expnd0\expndtw0\kerning0
+- offset: \ul 0x14
+\f3\b0\fs24 \ulnone \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs36 \cf0 \kerning1\expnd0\expndtw0 \
+
+\f2\b \ul ## Use port A to decide whether to turn the LED on or off\
+
+\f0\b0 \ulnone \
+
+\f2\b \ul \
+
+\f0\b0 \ulnone \
+}
