@@ -1,0 +1,9 @@
+17:01:40 **** Clean-only build of configuration Debug for project USART_interrupt_Routine ****
+make -j7 clean 
+rm -rf ./Startup/startup_stm32f407vgtx.d ./Startup/startup_stm32f407vgtx.o
+rm -rf ./Src/main.d ./Src/main.o ./Src/main.su ./Src/syscalls.d ./Src/syscalls.o ./Src/syscalls.su ./Src/sysmem.d ./Src/sysmem.o ./Src/sysmem.su
+rm -rf USART_interrupt_Routine.elf USART_interrupt_Routine.list USART_interrupt_Routine.map default.size.stdout
+ 
+
+17:01:40 Build Finished. 0 errors, 0 warnings. (took 336ms)
+

@@ -1,0 +1,17 @@
+13:05:58 **** Incremental Build of configuration Debug for project system_interrupt_3 ****
+make -j7 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/main.o"
+arm-none-eabi-gcc -o "system_interrupt_3.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/chimaochiagha/STM32CubeIDE/MyWorkspace/Target/system_interrupt_3/STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="system_interrupt_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: system_interrupt_3.elf
+ 
+arm-none-eabi-size   system_interrupt_3.elf 
+arm-none-eabi-objdump -h -S  system_interrupt_3.elf  > "system_interrupt_3.list"
+   text	   data	    bss	    dec	    hex	filename
+   5472	    108	   1588	   7168	   1c00	system_interrupt_3.elf
+Finished building: default.size.stdout
+ 
+Finished building: system_interrupt_3.list
+ 
+
+13:05:58 Build Finished. 0 errors, 0 warnings. (took 549ms)
+

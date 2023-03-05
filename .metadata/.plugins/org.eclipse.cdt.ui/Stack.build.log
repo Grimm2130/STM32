@@ -1,0 +1,30 @@
+14:56:39 **** Incremental Build of configuration Debug for project Stack ****
+make -j7 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/main.o"
+../Src/main.c: In function 'SVC_Handler':
+../Src/main.c:76:37: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   76 |  printf("The control bit is set to %x\nWhile the PSP's address is %x\n", control, addr);
+      |                                    ~^                                    ~~~~~~~
+      |                                     |                                    |
+      |                                     unsigned int                         uint32_t {aka long unsigned int}
+      |                                    %lx
+../Src/main.c:76:68: warning: format '%x' expects argument of type 'unsigned int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   76 |  printf("The control bit is set to %x\nWhile the PSP's address is %x\n", control, addr);
+      |                                                                   ~^              ~~~~
+      |                                                                    |              |
+      |                                                                    unsigned int   uint32_t {aka long unsigned int}
+      |                                                                   %lx
+arm-none-eabi-gcc -o "Stack.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/chimaochiagha/STM32CubeIDE/MyWorkspace/Target/Stack/STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Stack.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Stack.elf
+ 
+arm-none-eabi-size   Stack.elf 
+arm-none-eabi-objdump -h -S  Stack.elf  > "Stack.list"
+   text	   data	    bss	    dec	    hex	filename
+  23900	    476	   1588	  25964	   656c	Stack.elf
+Finished building: default.size.stdout
+ 
+Finished building: Stack.list
+ 
+
+14:56:40 Build Finished. 0 errors, 2 warnings. (took 598ms)
+

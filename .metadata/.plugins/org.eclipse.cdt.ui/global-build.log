@@ -1,21 +1,70 @@
-02:23:53 **** Incremental Build of configuration Debug for project inline_Assembly ****
+14:48:04 **** Incremental Build of configuration Debug for project Scheduler ****
 make -j7 all 
 arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/main.o"
-arm-none-eabi-gcc -o "inline_Assembly.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/chimaochiagha/STM32CubeIDE/MyWorkspace/Target/inline_Assembly/STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="inline_Assembly.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: inline_Assembly.elf
+arm-none-eabi-gcc -o "Scheduler.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/chimaochiagha/STM32CubeIDE/MyWorkspace/Target/Scheduler/STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Scheduler.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Scheduler.elf
  
-arm-none-eabi-size   inline_Assembly.elf 
-arm-none-eabi-objdump -h -S  inline_Assembly.elf  > "inline_Assembly.list"
+arm-none-eabi-size   Scheduler.elf 
+arm-none-eabi-objdump -h -S  Scheduler.elf  > "Scheduler.list"
    text	   data	    bss	    dec	    hex	filename
-  23640	    476	   1588	  25704	   6468	inline_Assembly.elf
+  24640	    492	   1604	  26736	   6870	Scheduler.elf
 Finished building: default.size.stdout
  
-Finished building: inline_Assembly.list
+Finished building: Scheduler.list
  
-02:23:56 **** Incremental Build of configuration Debug for project inline_Assembly ****
+14:48:12 **** Incremental Build of configuration Debug for project Scheduler ****
 make -j7 all 
-arm-none-eabi-size   inline_Assembly.elf 
+arm-none-eabi-size   Scheduler.elf 
    text	   data	    bss	    dec	    hex	filename
-  23640	    476	   1588	  25704	   6468	inline_Assembly.elf
+  24640	    492	   1604	  26736	   6870	Scheduler.elf
 Finished building: default.size.stdout
+ 
+15:18:24 **** Incremental Build of configuration Debug for project Scheduler ****
+make -j7 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/main.o"
+arm-none-eabi-gcc -o "Scheduler.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/chimaochiagha/STM32CubeIDE/MyWorkspace/Target/Scheduler/STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Scheduler.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Scheduler.elf
+ 
+arm-none-eabi-size   Scheduler.elf 
+arm-none-eabi-objdump -h -S  Scheduler.elf  > "Scheduler.list"
+   text	   data	    bss	    dec	    hex	filename
+  24648	    492	   1604	  26744	   6878	Scheduler.elf
+Finished building: default.size.stdout
+ 
+Finished building: Scheduler.list
+ 
+15:19:58 **** Incremental Build of configuration Debug for project Scheduler ****
+make -j7 all 
+arm-none-eabi-size   Scheduler.elf 
+   text	   data	    bss	    dec	    hex	filename
+  24648	    492	   1604	  26744	   6878	Scheduler.elf
+Finished building: default.size.stdout
+ 
+15:27:28 **** Incremental Build of configuration Debug for project Scheduler ****
+make -j7 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/main.o"
+arm-none-eabi-gcc -o "Scheduler.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/chimaochiagha/STM32CubeIDE/MyWorkspace/Target/Scheduler/STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Scheduler.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Scheduler.elf
+ 
+arm-none-eabi-size   Scheduler.elf 
+arm-none-eabi-objdump -h -S  Scheduler.elf  > "Scheduler.list"
+   text	   data	    bss	    dec	    hex	filename
+  24648	    492	   1604	  26744	   6878	Scheduler.elf
+Finished building: default.size.stdout
+ 
+Finished building: Scheduler.list
+ 
+15:33:46 **** Incremental Build of configuration Debug for project Scheduler ****
+make -j7 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/main.o"
+arm-none-eabi-gcc -o "Scheduler.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/chimaochiagha/STM32CubeIDE/MyWorkspace/Target/Scheduler/STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Scheduler.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Scheduler.elf
+ 
+arm-none-eabi-size   Scheduler.elf 
+arm-none-eabi-objdump -h -S  Scheduler.elf  > "Scheduler.list"
+   text	   data	    bss	    dec	    hex	filename
+  24648	    492	   1604	  26744	   6878	Scheduler.elf
+Finished building: default.size.stdout
+ 
+Finished building: Scheduler.list
  

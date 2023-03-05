@@ -1,0 +1,4 @@
+../Src/main.c:48:29:change_sp_to_psp	0	static,ignoring_inline_asm
+../Src/main.c:64:6:generate_SVC_interrupt	4	static,ignoring_inline_asm
+../Src/main.c:71:6:SVC_Handler	16	static,ignoring_inline_asm
+../Src/main.c:79:5:main	8	static

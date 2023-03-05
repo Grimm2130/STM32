@@ -1,0 +1,10 @@
+../Src/main.c:37:6:enable_usage_fault	4	static
+../Src/main.c:41:6:enable_mem_fault	4	static
+../Src/main.c:48:6:trigger_usage_1	16	static
+../Src/main.c:62:29:trigger_usage_2	0	static,ignoring_inline_asm
+../Src/main.c:68:6:trigger_MEM_fault	16	static
+../Src/main.c:83:5:main	8	static
+../Src/main.c:95:29:UsageFault_Handler	0	static,ignoring_inline_asm
+../Src/main.c:100:6:check_sp_content	16	static
+../Src/main.c:112:6:MemManage_Handler	8	static
+../Src/main.c:123:6:HardFault_Handler	8	static

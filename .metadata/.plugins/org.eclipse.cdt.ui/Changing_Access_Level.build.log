@@ -1,0 +1,17 @@
+21:04:26 **** Incremental Build of configuration Debug for project Changing_Access_Level ****
+make -j7 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/main.o"
+arm-none-eabi-gcc -o "Changing_Access_Level.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/chimaochiagha/STM32CubeIDE/MyWorkspace/Target/Changing_Access_Level/STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Changing_Access_Level.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Changing_Access_Level.elf
+ 
+arm-none-eabi-size   Changing_Access_Level.elf 
+arm-none-eabi-objdump -h -S  Changing_Access_Level.elf  > "Changing_Access_Level.list"
+   text	   data	    bss	    dec	    hex	filename
+   4028	    108	   1588	   5724	   165c	Changing_Access_Level.elf
+Finished building: default.size.stdout
+ 
+Finished building: Changing_Access_Level.list
+ 
+
+21:04:27 Build Finished. 0 errors, 0 warnings. (took 533ms)
+
