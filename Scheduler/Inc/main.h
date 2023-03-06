@@ -38,9 +38,31 @@
 #define TASK_2_START (SRAM_END - (TASK_SIZE))
 #define TASK_3_START ( (SRAM_END) - ((2) * (TASK_SIZE)) )
 #define TASK_4_START (SRAM_END - ((3) * (TASK_SIZE)))
-#define SCHED_TASK_START (SRAM_END - ((4) * (TASK_SIZE)))
+#define IDLE_TASK_START (SRAM_END - ((4) * (TASK_SIZE)))
+#define SCHED_TASK_START (SRAM_END - ((5) * (TASK_SIZE)))
 
-#define MAX_TASKS 4
+#define MAX_TASKS 5
+
+#define TASK_READY_STATE 0x00;
+#define TASK_BUSY_STATE 0xFF;
+
+/** -------------------------------------------------------------- **/
+/**------------------- Structs Tasks ----------------- **/
+/** -------------------------------------------------------------- **/
+/**
+ * Structs which manage task execution
+ * Holds:
+ * 		Address of task handler
+ * 		PSP start address
+ * 		Tasks state in CPU
+ * 		Block time count
+ */
+typedef struct{
+	void (*handler)(void);			// Function Pointer
+	uint32_t volatile PSP_addr;
+	uint8_t volatile task_state;
+	uint32_t volatile block_time;
+} task_t;
 
 
 #endif /* MAIN_H_ */
