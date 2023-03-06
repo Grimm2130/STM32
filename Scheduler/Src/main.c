@@ -60,7 +60,7 @@ void sys_delay(uint8_t time_ms);
 /** -------------------------------------------------------------- **/
 
 // Enable Processor Faults
-void enable_interrupts(){
+void enable_fault_handlers(){
 	SHCSR |= (1 << 18);		// Usage Faults
 	SHCSR |= (1 << 17);		// Bus faults
 	SHCSR |= (1 << 16);		// Mem faults
@@ -189,7 +189,7 @@ int main(void)
 {
 	// DONE USING MSP
 	// instantiate interrupts
-	enable_interrupts();
+	enable_fault_handlers();
 
 	// initialize the scheduler stack pointer
 	stack_init(SCHED_TASK_START);
@@ -322,6 +322,9 @@ void schedule(){
  * Function to update the blocking states of the task
  */
 void update_task_state(){
+	// Protect user level access to global variables from interrupts
+	DISABLE_INTERRUPTS();
+
 	// Cycle through the tasks
 	for(uint8_t i = 1; i < MAX_TASKS; i++){
 		// check if the global_block tick is <= the global tick count
@@ -330,6 +333,9 @@ void update_task_state(){
 			tasks[i].task_state = TASK_READY_STATE;
 		}
 	}
+
+
+	ENABLE_INTERRUPTS();
 }
 
 /**
@@ -340,6 +346,9 @@ void update_task_state(){
  * 	time_ms: number of ms of delay required from the
  */
 void sys_delay(uint8_t time_ms){
+	// Protect user level access to global variables from interrupts
+	DISABLE_INTERRUPTS();
+
 	// Don't affect busy task
 	if(curr_task != 0){
 		// Update the current value of the current task's block timer
@@ -349,6 +358,9 @@ void sys_delay(uint8_t time_ms){
 		// Schedule other tasks to run
 		schedule();
 	}
+
+	// Re-enable interrupts
+	ENABLE_INTERRUPTS();
 }
 
 /** -------------------------------------------------------------- **/

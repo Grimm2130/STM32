@@ -5559,3 +5559,15 @@ java.lang.IndexOutOfBoundsException: Index 4 out of bounds for length 4
 2023-03-06 13:31:27,366 [ERROR] ConfigurationRetriever:140 - IOException on connection: citools.st.com
 2023-03-06 13:31:27,367 [ERROR] ConfigurationRetriever:140 - IOException on connection: citools.st.com
 2023-03-06 13:31:27,444 [ERROR] ConfigurationRetriever:140 - IOException on connection: citools.st.com
+2023-03-06 13:52:07,666 [ERROR] ConfigurationRetriever:140 - IOException on connection: citools.st.com
+2023-03-06 13:52:07,691 [ERROR] ConfigurationRetriever:140 - IOException on connection: citools.st.com
+2023-03-06 13:52:07,692 [ERROR] ConfigurationRetriever:140 - IOException on connection: citools.st.com
+2023-03-06 13:56:28,384 [ERROR] ConfigurationRetriever:140 - IOException on connection: citools.st.com
+2023-03-06 13:56:28,477 [ERROR] ConfigurationRetriever:140 - IOException on connection: citools.st.com
+2023-03-06 13:56:28,484 [ERROR] ConfigurationRetriever:140 - IOException on connection: citools.st.com
+2023-03-06 13:56:30,772 [ERROR] ConfigurationRetriever:140 - IOException on connection: citools.st.com
+2023-03-06 13:56:30,775 [ERROR] ConfigurationRetriever:140 - IOException on connection: citools.st.com
+2023-03-06 13:56:30,775 [ERROR] ConfigurationRetriever:140 - IOException on connection: citools.st.com
+2023-03-06 13:58:09,564 [ERROR] ConfigurationRetriever:140 - IOException on connection: citools.st.com
+2023-03-06 13:58:09,566 [ERROR] ConfigurationRetriever:140 - IOException on connection: citools.st.com
+2023-03-06 13:58:09,566 [ERROR] ConfigurationRetriever:140 - IOException on connection: citools.st.com

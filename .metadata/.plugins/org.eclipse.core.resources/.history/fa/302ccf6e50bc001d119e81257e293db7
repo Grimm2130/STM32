@@ -19,6 +19,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "main.h"
+#include "led.h"
 
 /** -------------------------------------------------------------- **/
 /**-------------------Task Handler Declarations ----------------- **/
@@ -28,40 +29,42 @@ void task_1_handler(void);
 void task_2_handler(void);
 void task_3_handler(void);
 void task_4_handler(void);
+void idle_task();
 
 
 
 /** -------------------------------------------------------------- **/
 /**------------------- Global variables ----------------- **/
 /** -------------------------------------------------------------- **/
-// PC addresses for tasks
-uint32_t volatile task_1_pc;
-uint32_t volatile task_2_pc;
-uint32_t volatile task_3_pc;
-uint32_t volatile task_4_pc;
 
-// PSP value of tasks
-uint32_t psp_of_tasks[MAX_TASKS] = {TASK_1_START,
-									TASK_2_START,
-									TASK_3_START,
-									TASK_4_START};
-
-// Address of task handlers
-uint32_t task_handlers[MAX_TASKS];
+// task structs
+task_t tasks[MAX_TASKS];
 
 // Index of current task
-uint8_t volatile curr_task = 0;
+uint8_t volatile curr_task = 1;
+
+uint32_t volatile global_tick_count = 0;
 
 
 /** -------------------------------------------------------------- **/
-/** ---------------- Helper Function Definitions ----------------- **/
+/** ---------------- Helper Function Declaration----------------- **/
 /** -------------------------------------------------------------- **/
 uint32_t get_curr_task_psp();
 void update_task();
+void schedule();
+void update_task_state();
+void sys_delay(uint8_t time_ms);
 
 /** -------------------------------------------------------------- **/
 /**------------------- Configuration/Setup Functions ----------------- **/
 /** -------------------------------------------------------------- **/
+
+// Enable Processor Faults
+void enable_interrupts(){
+	SHCSR |= (1 << 18);		// Usage Faults
+	SHCSR |= (1 << 17);		// Bus faults
+	SHCSR |= (1 << 16);		// Mem faults
+}
 
 /**
  * Function to define the count down time for the scheduler
@@ -91,11 +94,30 @@ void set_scheduler_time(uint32_t time_ms){
 
 
 // initialize task handlers
-void init_task_handler_addrs(){
-	task_handlers[0] = (uint32_t) task_1_handler;
-	task_handlers[1] = (uint32_t) task_2_handler;
-	task_handlers[2] = (uint32_t) task_3_handler;
-	task_handlers[3] = (uint32_t) task_4_handler;
+void init_task_structs(){
+	// Handlers
+	tasks[0].handler = idle_task;
+	tasks[1].handler = task_1_handler;
+	tasks[2].handler = task_2_handler;
+	tasks[3].handler = task_3_handler;
+	tasks[4].handler = task_4_handler;
+
+	// PSP addresses
+	tasks[0].PSP_addr = (uint32_t) IDLE_TASK_START;
+	tasks[1].PSP_addr = (uint32_t) TASK_1_START;
+	tasks[2].PSP_addr = (uint32_t) TASK_2_START;
+	tasks[3].PSP_addr = (uint32_t) TASK_3_START;
+	tasks[4].PSP_addr = (uint32_t) TASK_4_START;
+
+	// Blocking states
+	for(uint8_t i = 0; i < MAX_TASKS; i++){
+		tasks[i].task_state = (uint8_t) TASK_READY_STATE;
+	}
+
+	// Block count down
+	for(uint8_t i = 0; i < MAX_TASKS; i++){
+		tasks[i].block_time = (uint8_t) 0;
+	}
 }
 
 
@@ -113,24 +135,28 @@ __attribute__((naked)) void stack_init(uint32_t top_of_scheduler_stack){
 void init_tasks(void){
 	// Define a variable for holding the current task's PSP
 	uint32_t* curr_psp = NULL;
+
 	for(uint8_t i = 0; i < MAX_TASKS; i++){
 		// Get the current task's psp location
-		curr_psp = (uint32_t*) psp_of_tasks[i];
+		curr_psp = (uint32_t*) tasks[i].PSP_addr;
 
 		// initialize the xPSR
 		curr_psp--;
 		*curr_psp = (uint32_t) 0x01000000;
 		// PC return address
 		curr_psp--;
-		*curr_psp = (uint32_t) task_handlers[i];
+		*curr_psp = (uint32_t) tasks[i].handler;
 		// Set the LR EXEC_RETURN ADDRESS
 		curr_psp--;
 		*curr_psp = 0xFFFFFFFD;		// use PSP after return
+
 		// Set the value of the general purpose registers
 		for(uint8_t reg = 0; reg < 13; reg++){
 			curr_psp--;
 			*curr_psp = 0;		// Set to zero
 		}
+		// Store the value of PSP  after the stack initialization
+		tasks[i].PSP_addr = (uint32_t) curr_psp;
 	}
 
 }
@@ -162,17 +188,27 @@ __attribute__((naked)) void switch_to_PSP(){
 int main(void)
 {
 	// DONE USING MSP
+	// instantiate interrupts
+	enable_interrupts();
+
 	// initialize the scheduler stack pointer
 	stack_init(SCHED_TASK_START);
-	// Initialize task handler addresses
-	init_task_handler_addrs();
+
+	// Initialize task struct with initial values
+	init_task_structs();
+
 	// initialize the task's stacks with dummy values for their first run
 	init_tasks();
+
+	// Instantiate LEDs
+	init_leds();
+
 	// Set the scheduler time for 1 ms
 	set_scheduler_time(1);
 
 
 	// DONE USING PSP
+
 	// Switch the SP to PSP
 	switch_to_PSP();
 
@@ -187,28 +223,136 @@ int main(void)
 /**-------------------Task Function Definitions ----------------- **/
 /** -------------------------------------------------------------- **/
 
+void idle_task(){
+	while(1);
+}
+
+// Toggle the green led
 void task_1_handler(void){
+	printf("In Task 1...\n");
 	while(1){
-		printf("In Task 1...\n");
+		// on with 250 ms delay
+		GreenSwitch(1);
+		sys_delay(250);
+		// off with 250 ms delay
+		GreenSwitch(0);
+		sys_delay(250);
 	}
 }
 
 
 void task_2_handler(void){
-	while(1)
-		printf("In Task 2...\n");
+	printf("In Task 2...\n");
+	while(1){
+		// on with 250 ms delay
+		OrangeSwitch(1);
+		sys_delay(100);
+		// off with 250 ms delay
+		OrangeSwitch(0);
+		sys_delay(100);
+	}
 }
 
 
 void task_3_handler(void){
-	while(1)
-		printf("In Task 3...\n");
+	printf("In Task 3...\n");
+	while(1){
+		// on with 250 ms delay
+		RedSwitch(1);
+		sys_delay(100);
+		// off with 250 ms delay
+		RedSwitch(0);
+		sys_delay(100);
+	}
 }
 
 
 void task_4_handler(void){
-	while(1)
-		printf("In Task 4...\n");
+	printf("In Task 4...\n");
+	while(1){
+		BlueSwitch(1);
+		sys_delay(100);
+		// off with 250 ms delay
+		BlueSwitch(0);
+		sys_delay(100);
+	}
+}
+
+
+/** -------------------------------------------------------------- **/
+/** ------------------------ Helper Function Declaration ----------------------- **/
+/** -------------------------------------------------------------- **/
+/**
+ * Function to get the next currently available task
+ */
+uint32_t get_curr_task_psp(){
+	return tasks[curr_task].PSP_addr;
+}
+
+/**
+ * Function to update the curr task the next available task
+ */
+void update_task(){
+	uint8_t i = 1;
+	uint8_t next_task = 0;
+	while(i < MAX_TASKS){
+		// Check the task state
+		uint8_t state = tasks[i].task_state;
+		if(state == TASK_READY_STATE){
+			// Set place holder for next task
+			next_task = i;
+			break;
+		}
+		// go to next task
+		i++;
+	}
+	curr_task = next_task;
+}
+
+/**
+ * Function to set the pend bit for the PendSV exception
+ */
+void schedule(){
+	// Pend the PendSV exception
+	ICSR |= (1 << PENDSVSET);
+}
+
+
+/**
+ * Function to update the blocking states of the task
+ */
+void update_task_state(){
+	// Cycle through the tasks
+	for(uint8_t i = 1; i < MAX_TASKS; i++){
+		// check if the global_block tick is <= the global tick count
+		if(tasks[i].block_time == global_tick_count){
+			// Change the state of the task to READY
+			tasks[i].task_state = TASK_READY_STATE;
+		}
+	}
+}
+
+/**
+ * Delay Function: Function which used the sys-tick exception to create delays
+ * It functions by setting the block timer of the currently running task and putting it into a blocked state
+ *
+ * Params:
+ * 	time_ms: number of ms of delay required from the
+ */
+void sys_delay(uint8_t time_ms){
+
+	// Protect user level access to global variables from interrupts
+	ENABLE_INTERRUPTS();
+	// Don't affect busy task
+	if(curr_task != 0){
+		// Update the current value of the current task's block timer
+		tasks[curr_task].block_time = global_tick_count + time_ms;
+		// Put the task in a block state
+		tasks[curr_task].task_state =  TASK_BUSY_STATE;
+		// Schedule other tasks to run
+		schedule();
+	}
+	DISABLE_INTERRUPTS();
 }
 
 /** -------------------------------------------------------------- **/
@@ -216,35 +360,22 @@ void task_4_handler(void){
 /** -------------------------------------------------------------- **/
 
 
-
-
-/** -------------------------------------------------------------- **/
-/** ------------------------ Helper Function Declaration ----------------------- **/
-/** -------------------------------------------------------------- **/
-uint32_t get_curr_task_psp(){
-	return psp_of_tasks[curr_task];
-}
-
-void update_task(){
-	curr_task = (curr_task+1) % MAX_TASKS;
-}
-
-// Sys-tick handler function:
 // This functoin performs the context switch
 // Takes saves R[4-11] of of the current running task
 // Pops R[4:11]of the next task and then exits the exception
-__attribute__((naked)) void SysTick_Handler(){
+
+__attribute__((naked)) void PendSV_Handler(){
 	// Get the address of the current task's PSP
 	asm volatile("MRS R0, PSP");
 	// Push registers R4 - R11
 	asm volatile("STMDB R0!, {R4-R11} ");
 	// Save the value of the PSP
-	asm volatile("MOV %0, R0" : "=r"(psp_of_tasks[curr_task]));
-	// Push the LR register
-	asm volatile("PUSH {LR}");
+	asm volatile("MOV %0, R0" : "=r"(tasks[curr_task].PSP_addr));
 
 	/* Update to the next task */
 
+	// Push the LR register
+	asm volatile("PUSH {LR}");
 	// Update task reference
 	asm volatile("BL update_task");
 	// Get the current running task
@@ -257,4 +388,21 @@ __attribute__((naked)) void SysTick_Handler(){
 	asm volatile("POP {LR}");
 	// Branch back to thread mode
 	asm volatile("BX LR");
+}
+
+/**
+ * Sys-tick handler function:
+ *  - Updates the global tick count;
+ *  - unblocks the finished tasks
+ *  - pends the PendSV exception
+ */
+void SysTick_Handler(){
+	// Update global tick
+	global_tick_count++;
+
+	// unblock finished tasks
+	update_task_state();
+
+	// pends the PendSV
+	schedule();
 }

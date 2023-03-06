@@ -1,4 +1,4 @@
-../Src/main.c:63:6:enable_interrupts	4	static
+../Src/main.c:63:6:enable_fault_handlers	4	static
 ../Src/main.c:80:6:set_scheduler_time	24	static
 ../Src/main.c:97:6:init_task_structs	16	static
 ../Src/main.c:125:29:stack_init	0	static,ignoring_inline_asm
@@ -13,7 +13,7 @@
 ../Src/main.c:288:10:get_curr_task_psp	4	static
 ../Src/main.c:295:6:update_task	16	static
 ../Src/main.c:315:6:schedule	4	static
-../Src/main.c:324:6:update_task_state	16	static
-../Src/main.c:342:6:sys_delay	16	static
-../Src/main.c:363:29:PendSV_Handler	0	static,ignoring_inline_asm
-../Src/main.c:395:6:SysTick_Handler	8	static
+../Src/main.c:324:6:update_task_state	16	static,ignoring_inline_asm
+../Src/main.c:348:6:sys_delay	16	static,ignoring_inline_asm
+../Src/main.c:375:29:PendSV_Handler	0	static,ignoring_inline_asm
+../Src/main.c:407:6:SysTick_Handler	8	static
