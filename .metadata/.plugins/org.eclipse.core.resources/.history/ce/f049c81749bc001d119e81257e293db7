@@ -49,8 +49,8 @@
 
 #define MAX_TASKS 5
 
-#define TASK_READY_STATE 	((uint8_t) 0x00)
-#define TASK_BUSY_STATE 	((uint8_t) 0xFF)
+#define TASK_READY_STATE 0x00;
+#define TASK_BUSY_STATE 0xFF;
 
 /** -------------------------------------------------------------- **/
 /**------------------- Structs Tasks ----------------- **/

@@ -230,52 +230,44 @@ void idle_task(){
 // Toggle the green led
 void task_1_handler(void){
 	printf("In Task 1...\n");
-	while(1){
-		// on with 250 ms delay
-		GreenSwitch(1);
-		sys_delay(250);
-		// off with 250 ms delay
-		GreenSwitch(0);
-		sys_delay(250);
-	}
+	// on with 250 ms delay
+	GreenSwitch(1);
+	sys_delay(250);
+	// off with 250 ms delay
+	GreenSwitch(0);
+	sys_delay(250);
 }
 
 
 void task_2_handler(void){
 	printf("In Task 2...\n");
-	while(1){
-		// on with 250 ms delay
-		OrangeSwitch(1);
-		sys_delay(100);
-		// off with 250 ms delay
-		OrangeSwitch(0);
-		sys_delay(100);
-	}
+	// on with 250 ms delay
+	OrangeSwitch(1);
+	sys_delay(100);
+	// off with 250 ms delay
+	OrangeSwitch(0);
+	sys_delay(100);
 }
 
 
 void task_3_handler(void){
 	printf("In Task 3...\n");
-	while(1){
-		// on with 250 ms delay
-		RedSwitch(1);
-		sys_delay(100);
-		// off with 250 ms delay
-		RedSwitch(0);
-		sys_delay(100);
-	}
+	// on with 250 ms delay
+	RedSwitch(1);
+	sys_delay(100);
+	// off with 250 ms delay
+	RedSwitch(0);
+	sys_delay(100);
 }
 
 
 void task_4_handler(void){
 	printf("In Task 4...\n");
-	while(1){
-		BlueSwitch(1);
-		sys_delay(100);
-		// off with 250 ms delay
-		BlueSwitch(0);
-		sys_delay(100);
-	}
+	BlueSwitch(1);
+	sys_delay(100);
+	// off with 250 ms delay
+	BlueSwitch(0);
+	sys_delay(100);
 }
 
 

@@ -1,1 +1,5 @@
 ../Src/led.c:29:6:init_leds	4	static
+../Src/led.c:46:6:GreenSwitch	16	static
+../Src/led.c:58:6:OrangeSwitch	16	static
+../Src/led.c:70:6:RedSwitch	16	static
+../Src/led.c:83:6:BlueSwitch	16	static

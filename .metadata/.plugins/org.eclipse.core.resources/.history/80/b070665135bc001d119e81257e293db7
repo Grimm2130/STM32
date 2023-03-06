@@ -18,14 +18,8 @@
 // SysTick Current Value Register
 #define SYST_CVR (* (uint32_t volatile*) 0xE000E018)
 
-// System Handler Control and State Register
+// System Exceptions
 #define SHCSR (* (uint32_t volatile*) 0xE000ED24)
-
-// Interrupt Control and State Register
-#define ICSR (* (uint32_t volatile*) 0xE000ED04)
-
-// PendSV pending set bit
-#define PENDSVSET 28
 
 /** -------------------------------------------------------------- **/
 /**------------------- Constants Definition ----------------- **/
@@ -49,8 +43,8 @@
 
 #define MAX_TASKS 5
 
-#define TASK_READY_STATE 	((uint8_t) 0x00)
-#define TASK_BUSY_STATE 	((uint8_t) 0xFF)
+#define TASK_READY_STATE 0x00;
+#define TASK_BUSY_STATE 0xFF;
 
 /** -------------------------------------------------------------- **/
 /**------------------- Structs Tasks ----------------- **/

@@ -53,7 +53,6 @@ uint32_t get_curr_task_psp();
 void update_task();
 void schedule();
 void update_task_state();
-void sys_delay(uint8_t time_ms);
 
 /** -------------------------------------------------------------- **/
 /**------------------- Configuration/Setup Functions ----------------- **/
@@ -227,55 +226,28 @@ void idle_task(){
 	while(1);
 }
 
-// Toggle the green led
 void task_1_handler(void){
-	printf("In Task 1...\n");
 	while(1){
-		// on with 250 ms delay
-		GreenSwitch(1);
-		sys_delay(250);
-		// off with 250 ms delay
-		GreenSwitch(0);
-		sys_delay(250);
+		printf("In Task 1...\n");
 	}
 }
 
 
 void task_2_handler(void){
-	printf("In Task 2...\n");
-	while(1){
-		// on with 250 ms delay
-		OrangeSwitch(1);
-		sys_delay(100);
-		// off with 250 ms delay
-		OrangeSwitch(0);
-		sys_delay(100);
-	}
+	while(1)
+		printf("In Task 2...\n");
 }
 
 
 void task_3_handler(void){
-	printf("In Task 3...\n");
-	while(1){
-		// on with 250 ms delay
-		RedSwitch(1);
-		sys_delay(100);
-		// off with 250 ms delay
-		RedSwitch(0);
-		sys_delay(100);
-	}
+	while(1)
+		printf("In Task 3...\n");
 }
 
 
 void task_4_handler(void){
-	printf("In Task 4...\n");
-	while(1){
-		BlueSwitch(1);
-		sys_delay(100);
-		// off with 250 ms delay
-		BlueSwitch(0);
-		sys_delay(100);
-	}
+	while(1)
+		printf("In Task 4...\n");
 }
 
 
@@ -325,7 +297,7 @@ void update_task_state(){
 	// Cycle through the tasks
 	for(uint8_t i = 1; i < MAX_TASKS; i++){
 		// check if the global_block tick is <= the global tick count
-		if(tasks[i].block_time == global_tick_count){
+		if(tasks[i].block_time <= global_tick_count){
 			// Change the state of the task to READY
 			tasks[i].task_state = TASK_READY_STATE;
 		}
@@ -340,15 +312,12 @@ void update_task_state(){
  * 	time_ms: number of ms of delay required from the
  */
 void sys_delay(uint8_t time_ms){
-	// Don't affect busy task
-	if(curr_task != 0){
-		// Update the current value of the current task's block timer
-		tasks[curr_task].block_time = global_tick_count + time_ms;
-		// Put the task in a block state
-		tasks[curr_task].task_state =  TASK_BUSY_STATE;
-		// Schedule other tasks to run
-		schedule();
-	}
+	// Update the current value of the current task's block timer
+	tasks[curr_task].block_time = global_tick_count + time_ms;
+	// Put the task in a block state
+	tasks[curr_task].task_state =  TASK_BUSY_STATE;
+	// Schedule other tasks to run
+	schedule();
 }
 
 /** -------------------------------------------------------------- **/
@@ -360,7 +329,7 @@ void sys_delay(uint8_t time_ms){
 // Takes saves R[4-11] of of the current running task
 // Pops R[4:11]of the next task and then exits the exception
 
-__attribute__((naked)) void PendSV_Handler(){
+__attribute__((naked)) PendSV_Handler(){
 	// Get the address of the current task's PSP
 	asm volatile("MRS R0, PSP");
 	// Push registers R4 - R11
