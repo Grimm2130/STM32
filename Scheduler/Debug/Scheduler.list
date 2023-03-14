@@ -39,13 +39,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_macro  00002e84  00000000  00000000  00021d28  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   00001dd5  00000000  00000000  00024bac  2**0
+ 18 .debug_line   00001ddc  00000000  00000000  00024bac  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    00009a28  00000000  00000000  00026981  2**0
+ 19 .debug_str    00009a28  00000000  00000000  00026988  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000050  00000000  00000000  000303a9  2**0
+ 20 .comment      00000050  00000000  00000000  000303b0  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  00001bf4  00000000  00000000  000303fc  2**2
+ 21 .debug_frame  00001bf4  00000000  00000000  00030400  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1366,6 +1366,8 @@ void set_scheduler_time(uint32_t time_ms){
  8000eee:	f7ff fe6b 	bl	8000bc8 <__aeabi_d2uiz>
  8000ef2:	4603      	mov	r3, r0
  8000ef4:	60fb      	str	r3, [r7, #12]
+	// read in the CPU period value]]
+
 	// Clear SYST_RVR
 	SYST_RVR &= ~(0x00FFFFFF);
  8000ef6:	4b0f      	ldr	r3, [pc, #60]	; (8000f34 <set_scheduler_time+0x7c>)
@@ -1374,30 +1376,30 @@ void set_scheduler_time(uint32_t time_ms){
  8000efc:	f003 437f 	and.w	r3, r3, #4278190080	; 0xff000000
  8000f00:	6013      	str	r3, [r2, #0]
 	// Set SYST_RVR
-	SYST_RVR |= reload_val;
+	SYST_RVR |= (reload_val-1);
  8000f02:	4b0c      	ldr	r3, [pc, #48]	; (8000f34 <set_scheduler_time+0x7c>)
  8000f04:	681a      	ldr	r2, [r3, #0]
- 8000f06:	490b      	ldr	r1, [pc, #44]	; (8000f34 <set_scheduler_time+0x7c>)
- 8000f08:	68fb      	ldr	r3, [r7, #12]
- 8000f0a:	4313      	orrs	r3, r2
- 8000f0c:	600b      	str	r3, [r1, #0]
+ 8000f06:	68fb      	ldr	r3, [r7, #12]
+ 8000f08:	3b01      	subs	r3, #1
+ 8000f0a:	490a      	ldr	r1, [pc, #40]	; (8000f34 <set_scheduler_time+0x7c>)
+ 8000f0c:	4313      	orrs	r3, r2
+ 8000f0e:	600b      	str	r3, [r1, #0]
 
 	// Enable the Systick timer
 	// Clock source = internal (1)
 	// Count down to zero triggers interrupt (1)
 	// Enable sys-tick interrupt (1)
 	SYST_CSR |= 0x7;
- 8000f0e:	4b0a      	ldr	r3, [pc, #40]	; (8000f38 <set_scheduler_time+0x80>)
- 8000f10:	681b      	ldr	r3, [r3, #0]
- 8000f12:	4a09      	ldr	r2, [pc, #36]	; (8000f38 <set_scheduler_time+0x80>)
- 8000f14:	f043 0307 	orr.w	r3, r3, #7
- 8000f18:	6013      	str	r3, [r2, #0]
+ 8000f10:	4b09      	ldr	r3, [pc, #36]	; (8000f38 <set_scheduler_time+0x80>)
+ 8000f12:	681b      	ldr	r3, [r3, #0]
+ 8000f14:	4a08      	ldr	r2, [pc, #32]	; (8000f38 <set_scheduler_time+0x80>)
+ 8000f16:	f043 0307 	orr.w	r3, r3, #7
+ 8000f1a:	6013      	str	r3, [r2, #0]
 }
- 8000f1a:	bf00      	nop
- 8000f1c:	3710      	adds	r7, #16
- 8000f1e:	46bd      	mov	sp, r7
- 8000f20:	bd80      	pop	{r7, pc}
- 8000f22:	bf00      	nop
+ 8000f1c:	bf00      	nop
+ 8000f1e:	3710      	adds	r7, #16
+ 8000f20:	46bd      	mov	sp, r7
+ 8000f22:	bd80      	pop	{r7, pc}
  8000f24:	f3af 8000 	nop.w
  8000f28:	d2f1a9fc 	.word	0xd2f1a9fc
  8000f2c:	3f10624d 	.word	0x3f10624d

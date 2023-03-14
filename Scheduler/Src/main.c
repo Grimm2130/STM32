@@ -80,10 +80,12 @@ void enable_fault_handlers(){
 void set_scheduler_time(uint32_t time_ms){
 	uint32_t reload_val = 0;
 	reload_val = (uint32_t) ( (time_ms/(CPU_PERIOD*1000) ) -1 );
+	// read in the CPU period value]]
+
 	// Clear SYST_RVR
 	SYST_RVR &= ~(0x00FFFFFF);
 	// Set SYST_RVR
-	SYST_RVR |= reload_val;
+	SYST_RVR |= (reload_val-1);
 
 	// Enable the Systick timer
 	// Clock source = internal (1)

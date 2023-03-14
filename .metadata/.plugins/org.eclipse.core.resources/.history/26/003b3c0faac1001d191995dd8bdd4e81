@@ -1,0 +1,32 @@
+/*
+ * sm32f4xx_gpio_driver.h
+ *
+ *  Created on: Mar 13, 2023
+ *      Author: chimaochiagha
+ */
+
+#ifndef INC_SM32F4XX_GPIO_DRIVER_H_
+#define INC_SM32F4XX_GPIO_DRIVER_H_
+
+#include "stm32f4xx.h"
+
+
+
+
+
+
+
+/*---------------------- Handler API's ------------------------*/
+void GPIOx_handler_init(gpio_hndlr_t* pGpio, uint8_t state);		// Initialize port mode
+
+void GPIOx_clk_en(gpio_hndlr_t* pGpio);								// Enable clk
+
+void Gpiox_read(gpio_hndlr_t* pGpio, uint8_t pinNum);
+
+void Gpiox_write(gpio_hndlr_t* pGpio, uint8_t, uint8_t pinNum, uint8_t state);
+
+void Gpiox_alt_en(gpio_hndlr_t* pGpio, uint8_t pinNum, uint8_t alt_fn);
+
+void Gpiox_attach_int(gpio_hndlr_t* pGpio, uint8_t pinNum, uint8_t irq_num);
+
+#endif /* INC_SM32F4XX_GPIO_DRIVER_H_ */

@@ -1,0 +1,11 @@
+Embedded Driver Development
+
+1) Map out the Base addresses of the following
+	- SRAM (1 & 2)
+	- FLASH
+	- ROM
+	- BUSES (AHB & APB)
+	- PERIPHERALS (GPIOs, Camera, e.t.c)
+	
+2) Create Sturctures for the peripherals, Where the sttructures will be used to
+	interface with the internal registers of the peripherals.

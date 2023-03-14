@@ -1,0 +1,61 @@
+/*
+ * sm32f4xx_gpio_driver.h
+ *
+ *  Created on: Mar 13, 2023
+ *      Author: chimaochiagha
+ */
+
+#ifndef INC_SM32F4XX_GPIO_DRIVER_H_
+#define INC_SM32F4XX_GPIO_DRIVER_H_
+
+#include "stm32f4xx.h"
+
+#define ON 					EN
+#define OFF					DIS
+#define TURN_ON(PIN)		(EN << PIN)
+#define TURN_OFF(PIN)		~(EN << PIN)
+
+/*----------------------------------------------------------*/
+/*-------------------------- Macros-----------------------*/
+/*----------------------------------------------------------*/
+
+/* MODES */
+#define INPUT				0x00U
+#define OUTPUT				0x01U
+#define ALT					0x02U
+#define ANLG				0x03U
+
+
+/* OUTPUT TYPE */
+#define PUSH_P				0x0U
+#define OPEN_D				0x1U
+
+
+/* OUTPUT SPEEED */
+#define LOW					0x00U
+#define MED					0x01U
+#define HIGH				0x02U
+#define V_HIGH				0x03U
+
+/* INPUT TYPE */
+#define NORM				0x00U
+#define PULL_U				0x01U
+#define PULL_D				0x02U
+
+
+
+
+/*---------------------- Handler API's ------------------------*/
+uint8_t GPIOx_handler_init(gpio_hndlr_t* pGpio, uint8_t pinNum, uint8_t state, uint8_t type);		// Initialize port mode
+
+void GPIOx_clk_en(gpio_hndlr_t* pGpio);								// Enable clk
+
+uint8_t Gpiox_read(gpio_hndlr_t* pGpio, uint8_t pinNum);				// read from pin
+
+void Gpiox_write(gpio_hndlr_t* pGpio, uint8_t pinNum, uint8_t state);	// write to pin
+
+void Gpiox_alt_en(gpio_hndlr_t* pGpio, uint8_t pinNum, uint8_t alt_fn);			// alternate function
+
+void Gpiox_attach_int(gpio_hndlr_t* pGpio, uint8_t pinNum, uint8_t irq_num);	// Attach interrupt
+
+#endif /* INC_SM32F4XX_GPIO_DRIVER_H_ */

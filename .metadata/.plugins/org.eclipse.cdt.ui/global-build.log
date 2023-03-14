@@ -1,21 +1,14 @@
-13:56:27 **** Incremental Build of configuration Debug for project Scheduler ****
+13:50:23 **** Incremental Build of configuration Debug for project STM32F4xx_Drivers ****
 make -j7 all 
-arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/main.o"
-arm-none-eabi-gcc -o "Scheduler.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/chimaochiagha/STM32CubeIDE/MyWorkspace/Target/Scheduler/STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Scheduler.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Scheduler.elf
+arm-none-eabi-gcc "../Drivers/Src/stm32f4xx_gpio_drivers.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -c -I../Inc -I"/Users/chimaochiagha/STM32CubeIDE/MyWorkspace/Target/STM32F4xx_Drivers/Drivers/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/Src/stm32f4xx_gpio_drivers.d" -MT"Drivers/Src/stm32f4xx_gpio_drivers.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/Src/stm32f4xx_gpio_drivers.o"
+arm-none-eabi-gcc -o "STM32F4xx_Drivers.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/chimaochiagha/STM32CubeIDE/MyWorkspace/Target/STM32F4xx_Drivers/STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32F4xx_Drivers.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM32F4xx_Drivers.elf
  
-arm-none-eabi-size   Scheduler.elf 
-arm-none-eabi-objdump -h -S  Scheduler.elf  > "Scheduler.list"
+arm-none-eabi-size   STM32F4xx_Drivers.elf 
+arm-none-eabi-objdump -h -S  STM32F4xx_Drivers.elf  > "STM32F4xx_Drivers.list"
    text	   data	    bss	    dec	    hex	filename
-  25552	    480	   1672	  27704	   6c38	Scheduler.elf
+   1260	      8	   1568	   2836	    b14	STM32F4xx_Drivers.elf
 Finished building: default.size.stdout
  
-Finished building: Scheduler.list
- 
-13:56:30 **** Incremental Build of configuration Debug for project Scheduler ****
-make -j7 all 
-arm-none-eabi-size   Scheduler.elf 
-   text	   data	    bss	    dec	    hex	filename
-  25552	    480	   1672	  27704	   6c38	Scheduler.elf
-Finished building: default.size.stdout
+Finished building: STM32F4xx_Drivers.list
  

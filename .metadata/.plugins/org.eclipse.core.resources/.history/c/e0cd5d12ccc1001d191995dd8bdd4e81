@@ -1,0 +1,30 @@
+/*
+ * stm32f4xx_gpio_drivers.c
+ *
+ *  Created on: Mar 13, 2023
+ *      Author: chimaochiagha
+ */
+
+
+#include "stm32f4xx_gpio_driver.h"
+
+
+/**
+ *
+ */
+void GPIOx_handler_init(gpio_hndlr_t* pGpio, uint8_t state){
+
+}
+
+void GPIOx_clk_en(gpio_hndlr_t* pGpio);								// Enable clk
+
+void Gpiox_read(gpio_hndlr_t* pGpio, uint8_t pinNum);				// read from pin
+
+void Gpiox_write(gpio_hndlr_t* pGpio, uint8_t, uint8_t pinNum, uint8_t state);	// write to pin
+
+void Gpiox_alt_en(gpio_hndlr_t* pGpio, uint8_t pinNum, uint8_t alt_fn);			// alternate function
+
+void Gpiox_attach_int(gpio_hndlr_t* pGpio, uint8_t pinNum, uint8_t irq_num);	// Attach interrupt
+
+
+

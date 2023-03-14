@@ -1,0 +1,173 @@
+/*
+ * stm32f4xx_gpio_drivers.c
+ *
+ *  Created on: Mar 13, 2023
+ *      Author: chimaochiagha
+ */
+
+
+#include "stm32f4xx_gpio_driver.h"
+
+#define ON 					EN
+#define OFF					DIS
+#define TURN_ON(PIN)		(EN << PIN)
+#define TURN_OFF(PIN)		~(EN << PIN)
+
+/**
+ *	fn			: 	GPIO handler function
+ *
+ *	des 		: 	This is used to instnatiate a gpio pin to a spcified output mode
+ *
+ *	@param(1)	:	Pointer to struct of a GPIO address handler
+ *	@param(2)	:	uint8_t representation of state (find under "MODES" in Header file's macros section)
+ *
+ *	note		: 	None
+ *
+ *	ret			: 	None
+ */
+void GPIOx_handler_init(gpio_hndlr_t* pGpio, uint8_t pinNum, uint8_t state, uint8_t type){
+	uint8_t fault = 0;
+	// Set Mode of pin
+	switch(state){
+
+		// Mode : input
+		case INPUT:
+			pGpio->MODE_R &= ~(~state << (2*pinNum));
+			if(type){
+				// Set input config of pin
+				pGpio->PU_PD_R |= (type << (2*pinNum));
+			}
+			break;
+
+		// Mode : output
+		case OUTPUT:
+			pGpio->MODE_R |= (0x1 << (2*pinNum));
+			if(type){
+				pGpio->OTYPE_R |= (type << (2*pinNum));
+			}
+			break;
+
+		// Mode : Alternate
+		case ALT:
+			pGpio->MODE_R |= (state << (2*pinNum));
+			break;
+
+		// Mode : Analog
+		case ANLG:
+			// #TODO
+			break;
+
+		// Fault : Invalid Mode
+		default:
+			fault = 1;
+			break;
+	}
+}
+
+/**
+ *	fn			:		Enables the GPIO on the AHB1 bus
+ *
+ *	des 		:		Loops Checks for the address of the GPIO's Address offset on the memory map
+ *						and enables the equivalent bit offset on the RCC_abh1_en register
+ *
+ *	@param(1)	:		Base Address of GPIO port
+ *
+ *	note		:		Port clock should be enabled before anything else is done
+ *
+ *	ret			:		none
+ */
+void GPIOx_clk_en(gpio_hndlr_t* pGpio){
+	// define an instance of the RCC handler
+	rcc_hndlr_t* pRcc_handler = (rcc_hndlr_t*) RCC_BASE_ADDR;
+
+	// Loop through the gpio addresses
+	uint32_t offset = 0;
+	for(uint32_t i = GPIO_A_BASE_ADDR; i <= GPIO_K_BASE_ADDR; i+= GPIOx_ADDR_OFF){
+		// Check if at GPIO address
+		if(i == (uint32_t) pGpio){
+			break;
+		}
+		offset++;
+	}
+	// enable the GPIO at that offset
+	pRcc_handler->RCC_AHB1_ENR |= (EN << offset);
+}
+
+
+/**
+ *	fn			:	GPIO read
+ *
+ *	des 		:	Read the state of an input pin on a GPIO port
+ *
+ *	@param(1)	:	Base Address of GPIO port
+ *	@param(2)	:	Pin number of port
+ *
+ *	note		:	Port must be in INPUT mode
+ *
+ *	ret			:	1 or 0
+ */
+uint8_t Gpiox_read(gpio_hndlr_t* pGpio, uint8_t pinNum){
+	return ( pGpio->ID_R & (1 << pinNum) );
+}
+
+
+/**
+ *	fn			: 	GPIO pin write
+ *
+ *	des 		:	Function to write a state to a gpio output pin
+ *
+ *	@param(1)	:	Base address of GPIO
+ *	@param(2)	:	Pin Number
+ *	@param(3)	:	State of pin
+ *
+ *	note		:
+ *
+ *	ret			:
+ */
+void Gpiox_write(gpio_hndlr_t* pGpio, uint8_t pinNum, uint8_t state){
+	switch(state){
+	case ON:
+		pGpio->OD_R |= TURN_ON(pinNum);
+		break;
+	case OFF:
+		pGpio->OD_R &= TURN_OFF(pinNum);
+		break;
+	}
+}
+
+
+/**
+ *	fn			:
+ *
+ *	des 		:
+ *
+ *	@param(1)	:
+ *	@param(2)	:
+ *
+ *	note		:
+ *
+ *	ret			:
+ */
+void Gpiox_alt_en(gpio_hndlr_t* pGpio, uint8_t pinNum, uint8_t alt_fn){
+
+}
+
+
+/**
+ *	fn			:
+ *
+ *	des 		:
+ *
+ *	@param(1)	:
+ *	@param(2)	:
+ *
+ *	note		:
+ *
+ *	ret			:
+ */
+void Gpiox_attach_int(gpio_hndlr_t* pGpio, uint8_t pinNum, uint8_t irq_num){
+
+}
+
+
+

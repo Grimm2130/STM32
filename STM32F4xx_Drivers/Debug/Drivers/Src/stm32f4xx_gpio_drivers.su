@@ -1,0 +1,9 @@
+../Drivers/Src/stm32f4xx_gpio_drivers.c:18:9:get_gpio_addr_offset	24	static
+../Drivers/Src/stm32f4xx_gpio_drivers.c:43:9:GPIOx_init	24	static
+../Drivers/Src/stm32f4xx_gpio_drivers.c:95:6:GPIOx_clk_en	24	static
+../Drivers/Src/stm32f4xx_gpio_drivers.c:118:9:Gpiox_read	16	static
+../Drivers/Src/stm32f4xx_gpio_drivers.c:136:6:Gpiox_write	16	static
+../Drivers/Src/stm32f4xx_gpio_drivers.c:159:6:Gpiox_toggle	16	static
+../Drivers/Src/stm32f4xx_gpio_drivers.c:178:6:Gpiox_alt_en	16	static
+../Drivers/Src/stm32f4xx_gpio_drivers.c:205:8:Gpiox_init_ext_int	40	static
+../Drivers/Src/stm32f4xx_gpio_drivers.c:296:6:Gpiox_de_init	24	static
